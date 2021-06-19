@@ -92,7 +92,6 @@ const computeBicubicInterpolationMatrix = (points) => {
         // return (dx(ix, iy + 1) - dx(ix, iy - 1)) / 2.0;
         return dx(ix, iy + 1).sub(dx(ix, iy - 1)).divideScalar(2.0);
     };
-    // - to do: check correctness
 
     // the four "central" values (bounding the region to be interpolated)
     const f00 = point(0, 0);
@@ -212,18 +211,12 @@ const init = () => {
         segments: 10
     };
 
-    //
-
     const renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 
-    //
-
     const camera = new THREE.PerspectiveCamera( 27, window.innerWidth / window.innerHeight, 1, 3500 );
-    //camera.position.z = 64;
-
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     camera.position.set(0, 25, 10);
     controls.update();
@@ -327,8 +320,6 @@ const init = () => {
             indices.push(b, c, d);
         }
     
-        //
-    
         geometry.setIndex( indices );
         geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
         geometry.setAttribute( 'normal', new THREE.Float32BufferAttribute( normals, 3 ) );
@@ -342,9 +333,6 @@ const init = () => {
 
     let oldInterpolationMode, oldSegments;
     const render = () => {
-        const time = Date.now() * 0.001;
-        /*mesh.rotation.x = time * 0.25;
-        mesh.rotation.y = time * 0.5;*/
         if (oldInterpolationMode != options.interpolationMode ||
             oldSegments != options.segments)
         {
@@ -358,7 +346,6 @@ const init = () => {
     const animate = () => {
         requestAnimationFrame( animate );
         render();
-        //stats.update();
     };
     animate();
 };
